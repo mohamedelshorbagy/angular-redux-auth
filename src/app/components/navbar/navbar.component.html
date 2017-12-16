@@ -1,0 +1,12 @@
+<div class="navbar navbar-default">
+  <ul class="nav navbar-nav">
+    <ng-template [ngIf]="(auth.isLoggedIn() | async) !== null">
+        <li routerLinkActive="active"><a routerLink="/dashboard">Dashboard</a></li>
+        <li routerLinkActive="active"><a routerLink="/signin" (click)="logout()">Logout</a></li>
+    </ng-template>
+    <ng-template [ngIf]="(auth.isLoggedIn() | async) === null">
+      <li routerLinkActive="active"><a routerLink="/signin">Sign In</a></li>
+      <li routerLinkActive="active"><a routerLink="/signup">Sign Up</a></li>
+    </ng-template>
+  </ul>
+</div>

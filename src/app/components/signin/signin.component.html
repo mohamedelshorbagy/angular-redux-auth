@@ -1,0 +1,36 @@
+<form (ngSubmit)="submitForm(f)" #f="ngForm" class="form-group">
+
+  <ng-template [ngIf]="msg">
+    <ng-template [ngIf]="!success">
+      <div class="alert alert-danger">{{msg}}</div>
+    </ng-template>
+  </ng-template>
+
+    <ng-template [ngIf]="success">
+      <div class="alert alert-success">You Logged In Successfully!. You Will Redirected right now.</div>
+    </ng-template>
+
+
+  <input type="text" name="username"
+         ngModel
+         required
+         #username="ngModel"
+         placeholder="Username"
+         class="form-control" /> 
+      <ng-template [ngIf]="username.touched && !username.valid">
+          <div class="alert alert-danger" *ngIf="username.errors.required">This Field is Rquired</div>
+      </ng-template>
+
+  <input type="password" name="password"
+         ngModel
+         required
+         #password="ngModel"
+         placeholder="password"
+         class="form-control" />
+      <ng-template [ngIf]="password.touched && !password.valid">
+        <div class="alert alert-danger" *ngIf="password.errors.required">This Field is Rquired</div>
+      </ng-template>
+
+   <button class="btn btn-primary" type="submit" [disabled]="!f.valid">Sign In</button>
+
+</form>
