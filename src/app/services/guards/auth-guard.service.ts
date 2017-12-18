@@ -3,15 +3,17 @@ import { Router,CanActivate } from '@angular/router';
 import { AuthServiceService } from '../auth-service.service'
 @Injectable()
 export class AuthGuardService implements CanActivate {
-
+  token:any;
   constructor(private router:Router,private auth:AuthServiceService) { }
 
 
   canActivate() {
-    let token = this.auth.isLoggedIn().subscribe(res => res);
-    if(token !== null) {
+    this.auth.isLoggedIn().subscribe(res => {
+      this.token = res;
+    });
+    if(this.token !== null) {
       return true;
-    } else if(token === null){
+    } else if(this.token === null){
       this.router.navigate(['/signin']);
       return false;
     }

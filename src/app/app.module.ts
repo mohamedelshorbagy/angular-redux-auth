@@ -23,7 +23,7 @@ import { AuthGuardService } from './services/guards/auth-guard.service';
 import { routes } from './app.router';
 
 // Import Redux and Actions
-import { NgRedux,NgReduxModule } from '@angular-redux/store';
+import { NgRedux,NgReduxModule,DevToolsExtension } from '@angular-redux/store';
 
 // Importing Store 
 import { INITIAL_STATE,IAppState,rootReducer } from './store';
@@ -51,8 +51,12 @@ import { INITIAL_STATE,IAppState,rootReducer } from './store';
   bootstrap: [AppComponent]
 })
 export class AppModule { 
-  constructor(ngRedux: NgRedux<IAppState>) {
-    ngRedux.configureStore(rootReducer,INITIAL_STATE);
+  constructor(ngRedux: NgRedux<IAppState>,private devTools: DevToolsExtension) {
+    let enhancers = [];
+      if (devTools.isEnabled()) {
+        enhancers = [ ...enhancers, devTools.enhancer() ];
+      }
+    ngRedux.configureStore(rootReducer,INITIAL_STATE,[],enhancers);
 
   }
 }
